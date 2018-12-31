@@ -1,22 +1,23 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Jargon.Linq
 {
     public static partial class EnumerableExtensions
     {
-        public static IEnumerable<IEnumerable<T>> Batch<T>(this IEnumerable<T> source, int bucketSize)
+        public static IEnumerable<IEnumerable<T>> Batch<T>(this IEnumerable<T> source, int size)
         {
             using (IEnumerator<T> enumerator = source.GetEnumerator())
             {
                 while (true)
                 {
-                    var bucket = new List<T>(bucketSize);
-                    for (int i = 0; i < bucketSize; i++)
+                    var batch = new List<T>(size);
+                    for (int i = 0; i < size; i++)
                     {
-                        if (enumerator.MoveNext()) bucket.Add(enumerator.Current);
-                        else if (bucket.Count == 0) yield break;
+                        if (enumerator.MoveNext()) batch.Add(enumerator.Current);
+                        else if (batch.Count == 0) yield break;
                     }
-                    yield return bucket.ToArray();
+                    yield return Array.AsReadOnly(batch.ToArray());
                 }
             }
         }

@@ -18,7 +18,7 @@ namespace Jargon.Linq
                 array[i] = array[randomPick];
                 array[randomPick] = temp;
             }
-            return array;
+            return Array.AsReadOnly(array);
         }
     }
 }
