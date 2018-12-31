@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Jargon.Linq
 {
-    public static class LinqExtensions
+    public static class EnumerableExtensions
     {
         public static IEnumerable<T> Evaluate<T>(this IEnumerable<T> source) => source.ToArray();
 
