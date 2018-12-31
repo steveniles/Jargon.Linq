@@ -30,8 +30,7 @@ namespace Jargon.Linq
         {
             using (IEnumerator<T> enumerator = source.GetEnumerator())
             {
-                var finished = false;
-                while (!finished)
+                while (true)
                 {
                     var bucket = new List<T>(bucketSize);
                     for (var i = 0; i < bucketSize; i++)
@@ -42,7 +41,6 @@ namespace Jargon.Linq
                         }
                         else
                         {
-                            finished = true;
                             if (bucket.Count == 0) yield break;
                         }
                     }
