@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Jargon.Linq
 {
-    public static class EnumerableExtensions
+    public static partial class EnumerableExtensions
     {
         private static readonly Random random = new Random();
 
@@ -23,23 +23,6 @@ namespace Jargon.Linq
             action(arg);
             return arg;
         });
-
-        public static IEnumerable<IEnumerable<T>> Batch<T>(this IEnumerable<T> source, int bucketSize)
-        {
-            using (IEnumerator<T> enumerator = source.GetEnumerator())
-            {
-                while (true)
-                {
-                    var bucket = new List<T>(bucketSize);
-                    for (int i = 0; i < bucketSize; i++)
-                    {
-                        if (enumerator.MoveNext()) bucket.Add(enumerator.Current);
-                        else if (bucket.Count == 0) yield break;
-                    }
-                    yield return bucket.ToArray();
-                }
-            }
-        }
 
         public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
         {
