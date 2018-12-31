@@ -11,4 +11,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Jargon.Linq\Jargon.Linq.csproj" />
+  </ItemGroup>
 </Project>
