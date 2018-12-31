@@ -58,8 +58,6 @@ namespace Jargon.Linq.UnitTests
             Assert.Equal(2, second.Count());
         }
 
-
-
         [Fact]
         public void Batch_Test_Infinity()
         {
