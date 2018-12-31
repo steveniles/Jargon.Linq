@@ -6,6 +6,8 @@ namespace Jargon.Linq
 {
     public static class EnumerableExtensions
     {
+        private static readonly Random random = new Random();
+
         public static IEnumerable<T> Evaluate<T>(this IEnumerable<T> source) => source.ToArray();
 
         public static IEnumerable<T> SkipNulls<T>(this IEnumerable<T> source) => source.Where(arg => arg != null);
@@ -41,7 +43,6 @@ namespace Jargon.Linq
 
         public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
         {
-            var random = new Random();
             T[] array = source.ToArray();
             for (int i = 0; i < array.Length; i++)
             {
