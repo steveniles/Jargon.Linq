@@ -27,25 +27,26 @@ namespace Jargon.Linq
         });
 
         public static IEnumerable<IEnumerable<T>> Batch<T>(this IEnumerable<T> source, int bucketSize)
-        {//Probably wrong, returns nested empty output on empty input
+        {
             using (IEnumerator<T> enumerator = source.GetEnumerator())
             {
                 var finished = false;
                 while (!finished)
                 {
-                    var bucket = new T[bucketSize];
+                    var bucket = new List<T>(bucketSize);
                     for (var i = 0; i < bucketSize; i++)
                     {
                         if (enumerator.MoveNext())
                         {
-                            bucket[i] = enumerator.Current;
+                            bucket.Add(enumerator.Current);
                         }
                         else
                         {
                             finished = true;
+                            if (bucket.Count == 0) yield break;
                         }
                     }
-                    yield return bucket;
+                    yield return bucket.ToArray();
                 }
             }
         }
