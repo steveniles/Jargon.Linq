@@ -58,16 +58,18 @@ namespace Jargon.Linq.UnitTests
             Assert.Equal(2, second.Count());
         }
 
-        private IEnumerable<int> getInfiniteSequence()
-        {
-            int number = 1;
-            while (true) yield return number++;
-        }
+
 
         [Fact]
         public void Batch_Test_Infinity()
         {
-            IEnumerable<int> source = this.getInfiniteSequence();
+            IEnumerable<int> getInfiniteSequence()
+            {
+                int number = 1;
+                while (true) yield return number++;
+            }
+
+            IEnumerable<int> source = getInfiniteSequence();
             IEnumerable<IEnumerable<int>> batched = source.Batch(5);
 
             Assert.NotNull(batched);
