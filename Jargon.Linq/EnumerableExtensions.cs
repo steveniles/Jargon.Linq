@@ -38,5 +38,19 @@ namespace Jargon.Linq
                 }
             }
         }
+
+        public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> source)
+        {
+            var random = new Random();
+            T[] array = source.ToArray();
+            for (int i = 0; i < array.Length; i++)
+            {
+                int randomPick = random.Next(array.Length - i) + i;
+                T temp = array[i];
+                array[i] = array[randomPick];
+                array[randomPick] = temp;
+            }
+            return array;
+        }
     }
 }
