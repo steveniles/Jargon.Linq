@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Jargon.Linq.UnitTests
 {
-    public class LinqTests
+    public class BatchTests
     {
         [Fact]
         public void Batch_Test_Empty()
