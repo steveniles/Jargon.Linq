@@ -33,16 +33,10 @@ namespace Jargon.Linq
                 while (true)
                 {
                     var bucket = new List<T>(bucketSize);
-                    for (var i = 0; i < bucketSize; i++)
+                    for (int i = 0; i < bucketSize; i++)
                     {
-                        if (enumerator.MoveNext())
-                        {
-                            bucket.Add(enumerator.Current);
-                        }
-                        else
-                        {
-                            if (bucket.Count == 0) yield break;
-                        }
+                        if (enumerator.MoveNext()) bucket.Add(enumerator.Current);
+                        else if (bucket.Count == 0) yield break;
                     }
                     yield return bucket.ToArray();
                 }
