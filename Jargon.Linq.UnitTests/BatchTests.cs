@@ -24,7 +24,7 @@ namespace Jargon.Linq.UnitTests
 
             IEnumerable<IEnumerable<int>> batched = source.Batch(5);
 
-            Assert.Equal(3, batched.Single().Count());
+            Assert.Equal(new [] { 1, 2, 3 }, batched.Single());
         }
 
         [Fact]
@@ -34,7 +34,7 @@ namespace Jargon.Linq.UnitTests
 
             IEnumerable<IEnumerable<int>> batched = source.Batch(5);
 
-            Assert.Equal(5, batched.Single().Count());
+            Assert.Equal(new [] { 1, 2, 3, 4, 5 }, batched.Single());
         }
 
         [Fact]
@@ -45,8 +45,8 @@ namespace Jargon.Linq.UnitTests
             IEnumerable<IEnumerable<int>> batched = source.Batch(5);
 
             Assert.Equal(2, batched.Count());
-            Assert.Equal(5, batched.First().Count());
-            Assert.Equal(2, batched.ElementAt(1).Count());
+            Assert.Equal(new int[] { 1, 2, 3, 4, 5 }, batched.First());
+            Assert.Equal(new int[] { 6, 7 }, batched.ElementAt(1));
         }
 
         [Fact]
@@ -57,13 +57,13 @@ namespace Jargon.Linq.UnitTests
                 int number = 0;
                 while (true) yield return ++number;
             }
-            
+
             IEnumerable<int> source = getInfiniteSequence();
 
             IEnumerable<IEnumerable<int>> batched = source.Batch(5);
 
-            Assert.Equal(1, batched.First().First());
-            Assert.Equal(6, batched.ElementAt(1).First());
+            Assert.Equal(new int[] { 1, 2, 3, 4, 5 }, batched.First());
+            Assert.Equal(new int[] { 6, 7, 8, 9, 10 }, batched.ElementAt(1));
         }
     }
 }
