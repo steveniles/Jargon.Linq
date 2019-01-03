@@ -1,4 +1,6 @@
-﻿namespace Jargon.Linq
+﻿using System;
+
+namespace Jargon.Linq
 {
     public static class NullChecker
     {
@@ -15,5 +17,8 @@
 
         public static bool IsBlank(this string input) => input.IsNotNull() && !string.IsNullOrEmpty(input) && string.IsNullOrWhiteSpace(input);
         public static bool IsNotBlank(this string input) => string.IsNullOrEmpty(input) || !string.IsNullOrWhiteSpace(input);
+
+        public static bool IsEmpty(this Guid input) => input == Guid.Empty;
+        public static bool IsNotEmpty(this Guid input) => input != Guid.Empty;
     }
 }
