@@ -24,11 +24,7 @@ namespace Jargon.Linq.UnitTests
 
             IEnumerable<IEnumerable<int>> batched = source.Batch(5);
 
-            Assert.NotNull(batched);
-            Assert.Single(batched);
-            IEnumerable<int> batch = batched.Single();
-            Assert.NotNull(batch);
-            Assert.Equal(3, batch.Count());
+            Assert.Equal(3, batched.Single().Count());
         }
 
         [Fact]
@@ -38,28 +34,19 @@ namespace Jargon.Linq.UnitTests
 
             IEnumerable<IEnumerable<int>> batched = source.Batch(5);
 
-            Assert.NotNull(batched);
-            Assert.Single(batched);
-            IEnumerable<int> batch = batched.Single();
-            Assert.NotNull(batch);
-            Assert.Equal(5, batch.Count());
+            Assert.Equal(5, batched.Single().Count());
         }
 
         [Fact]
-        public void Batch_Handles_Remainder()
+        public void Batch_Handles_Overflow()
         {
             IEnumerable<int> source = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
 
             IEnumerable<IEnumerable<int>> batched = source.Batch(5);
 
-            Assert.NotNull(batched);
             Assert.Equal(2, batched.Count());
-            IEnumerable<int> first = batched.First();
-            Assert.NotNull(first);
-            Assert.Equal(5, first.Count());
-            IEnumerable<int> second = batched.ElementAt(1);
-            Assert.NotNull(second);
-            Assert.Equal(2, second.Count());
+            Assert.Equal(5, batched.First().Count());
+            Assert.Equal(2, batched.ElementAt(1).Count());
         }
 
         [Fact]
@@ -70,20 +57,13 @@ namespace Jargon.Linq.UnitTests
                 int number = 0;
                 while (true) yield return ++number;
             }
-
-            IEnumerable<int> source = getInfiniteSequence();
             
+            IEnumerable<int> source = getInfiniteSequence();
+
             IEnumerable<IEnumerable<int>> batched = source.Batch(5);
 
-            Assert.NotNull(batched);
-            IEnumerable<int> first = batched.First();
-            Assert.NotNull(first);
-            Assert.Equal(5, first.Count());
-            Assert.Equal(1, first.First());
-            IEnumerable<int> second = batched.ElementAt(1);
-            Assert.NotNull(second);
-            Assert.Equal(5, second.Count());
-            Assert.Equal(6, second.First());
+            Assert.Equal(1, batched.First().First());
+            Assert.Equal(6, batched.ElementAt(1).First());
         }
     }
 }
