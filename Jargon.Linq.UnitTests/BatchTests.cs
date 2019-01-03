@@ -7,9 +7,10 @@ namespace Jargon.Linq.UnitTests
     public class BatchTests
     {
         [Fact]
-        public void Batch_Test_Empty()
+        public void Batch_Handles_Empty()
         {
             IEnumerable<int> source = Enumerable.Empty<int>();
+
             IEnumerable<IEnumerable<int>> batched = source.Batch(5);
 
             Assert.NotNull(batched);
@@ -17,35 +18,38 @@ namespace Jargon.Linq.UnitTests
         }
 
         [Fact]
-        public void Batch_Test_Part()
+        public void Batch_Handles_Partial()
         {
-            IEnumerable<int> source = new List<int> { 1, 2, 3, 4 };
+            IEnumerable<int> source = new List<int> { 1, 2, 3 };
+
             IEnumerable<IEnumerable<int>> batched = source.Batch(5);
 
             Assert.NotNull(batched);
             Assert.Single(batched);
-            IEnumerable<int> first = batched.First();
-            Assert.NotNull(first);
-            Assert.Equal(4, first.Count());
+            IEnumerable<int> batch = batched.Single();
+            Assert.NotNull(batch);
+            Assert.Equal(3, batch.Count());
         }
 
         [Fact]
-        public void Batch_Test_Full()
+        public void Batch_Handles_Full()
         {
             IEnumerable<int> source = new List<int> { 1, 2, 3, 4, 5 };
+
             IEnumerable<IEnumerable<int>> batched = source.Batch(5);
 
             Assert.NotNull(batched);
             Assert.Single(batched);
-            IEnumerable<int> first = batched.First();
-            Assert.NotNull(first);
-            Assert.Equal(5, first.Count());
+            IEnumerable<int> batch = batched.Single();
+            Assert.NotNull(batch);
+            Assert.Equal(5, batch.Count());
         }
 
         [Fact]
-        public void Batch_Test_Overflow()
+        public void Batch_Handles_Remainder()
         {
             IEnumerable<int> source = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
+
             IEnumerable<IEnumerable<int>> batched = source.Batch(5);
 
             Assert.NotNull(batched);
@@ -59,15 +63,16 @@ namespace Jargon.Linq.UnitTests
         }
 
         [Fact]
-        public void Batch_Test_Infinity()
+        public void Batch_Handles_Infinity()
         {
             IEnumerable<int> getInfiniteSequence()
             {
-                int number = 1;
-                while (true) yield return number++;
+                int number = 0;
+                while (true) yield return ++number;
             }
 
             IEnumerable<int> source = getInfiniteSequence();
+            
             IEnumerable<IEnumerable<int>> batched = source.Batch(5);
 
             Assert.NotNull(batched);
