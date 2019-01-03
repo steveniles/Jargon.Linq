@@ -17,7 +17,7 @@ namespace Jargon.Linq
                         if (enumerator.MoveNext()) batch.Add(enumerator.Current);
                         else if (batch.Count == 0) yield break;
                     }
-                    yield return Array.AsReadOnly(batch.ToArray());
+                    yield return batch.ToArray();
                 }
             }
         }
