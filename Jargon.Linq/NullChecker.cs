@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Jargon.Linq
 {
@@ -20,5 +23,9 @@ namespace Jargon.Linq
 
         public static bool IsEmpty(this Guid input) => input == Guid.Empty;
         public static bool IsNotEmpty(this Guid input) => input != Guid.Empty;
+
+        public static bool IsEmpty(this IEnumerable collection) => collection?.GetEnumerator().MoveNext() == false;
+
+        public static bool IsNotEmpty(this IEnumerable collection) => collection?.GetEnumerator().MoveNext() == true;
     }
 }
