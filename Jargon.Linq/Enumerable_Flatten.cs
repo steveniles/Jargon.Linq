@@ -5,6 +5,7 @@ namespace Jargon.Linq
 {
     public static partial class EnumerableExtensions
     {
-        public static IEnumerable<T> Flatten<T>(this IEnumerable<IEnumerable<T>> source) => source.SelectMany(items => items);
+        public static T Self<T>(this T self) => self;
+        public static IEnumerable<T> Flatten<T>(this IEnumerable<IEnumerable<T>> source) => source.SelectMany(Self);
     }
 }
