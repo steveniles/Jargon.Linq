@@ -4,7 +4,7 @@ namespace Jargon.Linq
 {
     public static partial class EnumerableExtensions
     {
-        public static IEnumerable<IList<T>> Batch<T>(this IEnumerable<T> source, int size)
+        public static IEnumerable<IReadOnlyList<T>> Batch<T>(this IEnumerable<T> source, int size)
         {
             using (IEnumerator<T> enumerator = source.GetEnumerator())
             {

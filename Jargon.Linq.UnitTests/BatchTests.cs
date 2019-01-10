@@ -11,7 +11,7 @@ namespace Jargon.Linq.UnitTests
         {
             IEnumerable<int> source = Enumerable.Empty<int>();
 
-            IEnumerable<IEnumerable<int>> batched = source.Batch(5);
+            IEnumerable<IReadOnlyList<int>> batched = source.Batch(5);
 
             Assert.NotNull(batched);
             Assert.Empty(batched);
@@ -22,9 +22,9 @@ namespace Jargon.Linq.UnitTests
         {
             IEnumerable<int> source = new List<int> { 1, 2, 3 };
 
-            IEnumerable<IEnumerable<int>> batched = source.Batch(5);
+            IEnumerable<IReadOnlyList<int>> batched = source.Batch(5);
 
-            Assert.Equal(new [] { 1, 2, 3 }, batched.Single());
+            Assert.Equal(new[] { 1, 2, 3 }, batched.Single());
         }
 
         [Fact]
@@ -32,9 +32,9 @@ namespace Jargon.Linq.UnitTests
         {
             IEnumerable<int> source = new List<int> { 1, 2, 3, 4, 5 };
 
-            IEnumerable<IEnumerable<int>> batched = source.Batch(5);
+            IEnumerable<IReadOnlyList<int>> batched = source.Batch(5);
 
-            Assert.Equal(new [] { 1, 2, 3, 4, 5 }, batched.Single());
+            Assert.Equal(new[] { 1, 2, 3, 4, 5 }, batched.Single());
         }
 
         [Fact]
@@ -42,11 +42,11 @@ namespace Jargon.Linq.UnitTests
         {
             IEnumerable<int> source = new List<int> { 1, 2, 3, 4, 5, 6, 7 };
 
-            IEnumerable<IEnumerable<int>> batched = source.Batch(5);
+            IEnumerable<IReadOnlyList<int>> batched = source.Batch(5);
 
             Assert.Equal(2, batched.Count());
-            Assert.Equal(new int[] { 1, 2, 3, 4, 5 }, batched.First());
-            Assert.Equal(new int[] { 6, 7 }, batched.ElementAt(1));
+            Assert.Equal(new int[] { 1, 2, 3, 4, 5 }, batched.First());//detects unneeded int[]?
+            Assert.Equal(new int[] { 6, 7 }, batched.ElementAt(1));//check new[] spacing in file
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace Jargon.Linq.UnitTests
 
             IEnumerable<int> source = getInfiniteSequence();
 
-            IEnumerable<IEnumerable<int>> batched = source.Batch(5);
+            IEnumerable<IReadOnlyList<int>> batched = source.Batch(5);
 
             Assert.Equal(new int[] { 1, 2, 3, 4, 5 }, batched.First());
             Assert.Equal(new int[] { 6, 7, 8, 9, 10 }, batched.ElementAt(1));
