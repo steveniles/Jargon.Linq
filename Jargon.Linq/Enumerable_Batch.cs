@@ -4,7 +4,7 @@ namespace Jargon.Linq
 {
     public static partial class EnumerableExtensions
     {
-        public static IEnumerable<IEnumerable<T>> Batch<T>(this IEnumerable<T> source, int size)
+        public static IEnumerable<IList<T>> Batch<T>(this IEnumerable<T> source, int size)
         {
             using (IEnumerator<T> enumerator = source.GetEnumerator())
             {
@@ -16,7 +16,8 @@ namespace Jargon.Linq
                         if (enumerator.MoveNext()) batch.Add(enumerator.Current);
                         else if (batch.Count == 0) yield break;
                     }
-                    yield return batch.ToArray();
+
+                    yield return batch;
                 }
             }
         }
