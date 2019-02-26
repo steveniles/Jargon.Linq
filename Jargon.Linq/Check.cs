@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Jargon.Linq
 {
@@ -15,13 +13,22 @@ namespace Jargon.Linq
 
         public static bool IsNotNull<T>(this T? @object) where T : struct => @object != null;
 
-        public static bool IsEmpty(this string input) => input.IsNotNull() && string.IsNullOrEmpty(input);
-        public static bool IsNotEmpty(this string input) => input.IsNull() || !string.IsNullOrEmpty(input);
+        public static bool IsDBNull(this object @object) => @object == DBNull.Value;
+
+        public static bool IsNullOrDBNull(this object @object) => @object == null || @object == DBNull.Value;
+
+        public static T UnDBNull<T>(this T @object) where T : class => @object == DBNull.Value ? null : @object;
+
+        public static bool IsEmpty(this string @string) => @string == string.Empty;
+
+        public static bool IsNotEmpty(this string @string) => @string != string.Empty;
 
         public static bool IsBlank(this string input) => input.IsNotNull() && !string.IsNullOrEmpty(input) && string.IsNullOrWhiteSpace(input);
+
         public static bool IsNotBlank(this string input) => string.IsNullOrEmpty(input) || !string.IsNullOrWhiteSpace(input);
 
         public static bool IsEmpty(this Guid input) => input == Guid.Empty;
+
         public static bool IsNotEmpty(this Guid input) => input != Guid.Empty;
 
         public static bool IsEmpty(this IEnumerable collection) => collection?.GetEnumerator().MoveNext() == false;
