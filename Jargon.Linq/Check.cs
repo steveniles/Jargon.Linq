@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Jargon.Linq
 {
-    public static class NullChecker
+    public static class Check
     {
         public static bool IsNull<T>(this T @object) where T : class => @object == null;
 
