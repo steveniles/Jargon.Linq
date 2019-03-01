@@ -21,5 +21,7 @@ namespace Jargon.Linq
             action(element);
             return element;
         });
+        
+        public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> source) => source ?? new List<T>();
     }
 }
