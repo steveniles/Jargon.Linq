@@ -21,7 +21,11 @@ namespace Jargon.Linq
             action(element);
             return element;
         });
-        
+
         public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> source) => source ?? new List<T>();
+
+        public static IEnumerable<T> With<T, TNullable>(this IEnumerable<T> source, Func<T, TNullable> projection) where TNullable : class => source.Where(arg => projection(arg) != null);
+
+        public static IEnumerable<T> With<T, TNullable>(this IEnumerable<T> source, Func<T, TNullable?> projection) where TNullable : struct => source.Where(arg => projection(arg) != null);
     }
 }
